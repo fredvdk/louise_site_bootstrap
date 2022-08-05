@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Message from '../message';
 
 //google calendar REST api url
-const baseUrl = "http://www.psycholooglouise.be:8080"
+const baseUrl = "https://www.psycholooglouise.be:8443"
 //const baseUrl = "http://localhost:8080"
 
 declare global {
