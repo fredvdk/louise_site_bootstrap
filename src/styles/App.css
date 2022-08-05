@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -28,9 +28,6 @@
   color: #61dafb;
 }
 
-.reserv {
-  min-height: 50 px;
-}
 
 @keyframes App-logo-spin {
   from {
@@ -49,6 +46,14 @@ body {
   font-size: larger !important;
 }
 
+@media only screen and (max-width: 600px) {
+  body {
+  font-size: smaller !important;
+  }
+  .footer {
+    font-size: x-small !important;
+  }
+}
 
 .textpadding {
   padding-left: 50px;
@@ -57,13 +62,13 @@ body {
 }
 
 h1 {
-  margin-top: 50px !important;
   margin-bottom: 50px;
   color: #a68376;
+  text-align: center;
 }
 
 .subheading {
-  min-height: 50px;
+  min-height: 100px;
 }
 
 .center {
@@ -72,17 +77,15 @@ h1 {
 }
 
 .animated {
-  
-  height: 3px;
   background-color: #a68376;
   animation-duration: 4s;
   width: 30%;
   margin-left: 35%;
   margin-bottom: 50px;
-  height:5px !important;
+  height:1px !important;
   animation-name: running;
   animation-delay: 2s;
-  animation-iteration-count: 3;
+  animation-iteration-count: 10;
 }
 
 @keyframes running {
@@ -90,3 +93,80 @@ h1 {
   to {width: 100%};
 }
 
+
+.footer{
+  font-size: small;
+  background:#a68376;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  color: white;
+}
+
+.footer .rightside{
+  text-align: right;
+}
+
+.header_nav{
+  background: white !important;
+
+}
+
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+a:hover {
+  color: white !important;
+}
+
+/* selected link */
+a:active {
+  color: white;
+}
+
+.listbox {
+ 
+  border-style: solid;
+  margin: 5%;
+  padding: 25px;
+  background-color: #f2edd8;
+  text-align: left;
+}
+
+.list{
+  list-style-type: "\2714";
+}
+
+.listbox li {
+  padding-left: 20px;
+}
+
+.text{
+  text-align: left;
+  margin:5%;
+}
+
+.form{
+  
+  padding-left: 5%;
+}
+
+.list-group-item.active{
+  background-color: #f2edd8 !important;
+  border-color:#f2edd8 !important;
+  color:black !important;
+
+}
+
+.right{
+  float: right;
+  border-radius: 15px;
+  margin: 15px;
+}

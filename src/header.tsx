@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import "./styles/navbar.css";
-import { HashLink as Link } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
+import { NavLink } from "react-bootstrap";
+import NavItem from "./navlink";
 
 export default function Navbar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -9,16 +11,18 @@ export default function Navbar() {
   const collapse = ()=>{ setIsNavExpanded(!isNavExpanded); }
 
   return (
-    <nav className="navigation sticky">
+    <nav className="navigation header_nav sticky">
       <a href="/" className="brand-name menu">
-        Psycholoog Louise
+         Psycholoog Louise 
       </a>
+
       <button
         className="hamburger"
         onClick={() => {
           setIsNavExpanded(!isNavExpanded);
         }}
       >
+       
         {/* icon from Heroicons.com */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,28 +37,20 @@ export default function Navbar() {
           />
         </svg>
       </button>
+
       <div
         className={
           isNavExpanded ? "navigation-menu expanded" : "navigation-menu"
         }
       >
-       <ul> 
-        <li>
-          <Link to={{ pathname: "/", hash: "#overMij" }} className={"menu"} onClick={collapse}>Over Mij</Link>
-        </li>
-        <li>
-          <Link to={{ pathname: "/", hash: "#therapie" }} className={"menu"} onClick={collapse}>Therapie</Link>
-        </li>
-        <li>
-          <Link to={{ pathname: "/", hash: "#voorWie" }} className={"menu"} onClick={collapse}>Voor Wie</Link>
-        </li>
-        <li>
-          <Link to={{ pathname: "/", hash: "#tarieven" }} className={"menu"} onClick={collapse}>Tarieven</Link>
-        </li>
-        <li>
-          <Link to={{ pathname: "/reservatie", hash: "#home" }} className={"menu"} onClick={collapse}>Afspraak maken</Link>
-        </li>
-        </ul> 
+      <ul onClick={collapse}> 
+        <NavItem path="/" text="Home" />
+        <NavItem path="/overMij" text="Over Mij" />
+        <NavItem path="/therapie" text="Therapie" />
+        <NavItem path="/voorWie" text="Voor Wie" />
+        <NavItem path="/tarieven" text="Tarieven" />
+        <NavItem path="/aanmelden" text="Aanmelden" />
+      </ul> 
         
       </div>
     </nav>

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Form, FormControl, FormGroup, FormLabel, Row, Col, Button, ListGroup, ListGroupItem, InputGroup, Container, Alert } from 'react-bootstrap';
 import { DtCalendar } from 'react-calendar-datetime-picker';
-import './calendar.css';
-import Title from './title';
+import '../styles/calendar.css';
+import Title from '../title';
 import { useNavigate } from 'react-router-dom';
-import Message from './message';
+import Message from '../message';
 
 //google calendar REST api url
 const baseUrl = "http://www.psycholooglouise.be:8080"
+//const baseUrl = "http://localhost:8080"
 
 declare global {
     interface Date{
@@ -31,33 +32,27 @@ function ReservationForm(){
 
     const [naam, setNaam] = useState("");
     const [email, setEmail] = useState("");
+    const [hulpvraag, setHulpvraag] = useState("");
 
     const [validated, setValidated] = useState(false);
     const [messageText, setmessageText] = useState("");
     const [showMessage, setshowMessage] = useState(false);
     const [messageVariant, setmessageVariant] = useState("");
+
+    const [buttonDisabled, setbuttonDisabled] = useState(true);
     
-
-
     const handleSubmit = (event) => {
         const form = event.currentTarget;
+
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
+          
         }
         setValidated(true);
-
-        if (selectedSlot == ""){
-            setmessageText("Error : No date and time selected - 1");
-            setmessageVariant("danger");
-            setshowMessage(true);
-
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    
         reserveer();
-        event.stopPropagation();
+        event.preventDefault();
+        setbuttonDisabled(true);
       };
 
     useEffect(()=> {
@@ -72,7 +67,7 @@ function ReservationForm(){
 
     
     function datechange(value){
-        if (value !== undefined) {
+        if ((value !== null)&&(value != undefined)) {
             setDate(value);
         
             console.log(value);
@@ -83,8 +78,13 @@ function ReservationForm(){
                     console.log(data);
                     setSlots(data);
                     setSelectedSlot("");
+                    setbuttonDisabled(true);
                 })
                 .catch(() => alert('no reservations possible - no calendar sync'));
+        }
+        else {
+            setSlots([{slot: "", eventID:"", active:false}]);
+            setbuttonDisabled(true);
         }
     }
 
@@ -105,11 +105,11 @@ function ReservationForm(){
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({summary: naam, description: email})
+                    body: JSON.stringify({naam: naam, email: email, hulpvraag: hulpvraag})
                 })
                         .then(response => response.json())
                         .then(data => {   
-                            setmessageText('Reservatie aanvraag goed ontvangen ' + data);
+                            setmessageText('Aanmelding is goed ontvangen, ik neem zo snel mogelijk contact op om de afspraak te bevestigen');
                             setmessageVariant("success");
                             setshowMessage(true);
                             console.log(data);
@@ -130,18 +130,22 @@ function ReservationForm(){
     function clickSlot(value){
         setSelectedSlot(value.target.id);
         setActiveSlot(value.target.id);  
+        if (value.target.id != null)
+            {
+                setbuttonDisabled(false);
+            }
     }
 
     return (
     <>
     
     <div id='home' className='subheading'></div>
-    <Title name='Reservaties' />
+    <Title name='Aanmelden' />
     
     <Message text={messageText} variant={messageVariant} show={showMessage} />
 
     <Form validated={validated} onSubmit={handleSubmit} >
-        <FormGroup className='mb-3' as={Row}>
+        <FormGroup className='form' as={Row}>
             <FormLabel column sm={2}>Naam</FormLabel>
             <Col sm={6}>
                 <Form.Control 
@@ -156,7 +160,7 @@ function ReservationForm(){
             </Col>
         </FormGroup>
 
-        <FormGroup className='mb-3' as={Row}>
+        <FormGroup className='form' as={Row}>
             <FormLabel column sm={2}>Email address</FormLabel>
             <Col sm={6}>
                 <FormControl 
@@ -168,25 +172,35 @@ function ReservationForm(){
                     Graag je emailadres invullen
                 </Form.Control.Feedback>
             </Col>
-            </FormGroup>
+        </FormGroup>
 
-        
+        <FormGroup className='form' as={Row}>
+            <FormLabel column sm={2}>Hulpvraag</FormLabel>
+            <Col sm={6}>
+                <FormControl 
+                    as='textarea' 
+                    rows={3}
+                    placeholder=''
+                    onChange={(e) => setHulpvraag(e.target.value)} />
+            </Col>
+        </FormGroup>
+
+        <FormGroup className='form'>
         <Row className="justify-content-md-center">
-            <Col>
-                
+         <FormLabel column sm={2}>Gewenste datum en tijd voor een afspraak</FormLabel>
+           <Col>
                     <DtCalendar
                     onChange={datechange}
                     minDate={minDate}
                     maxDate={maxDate}
                     disabledDates={disableddates}
                     />
-                
             </Col>
             <Col>
-                <ListGroup style={{border:'1px solid', height:'auto', width: 'auto', margin:'50px 150px 50px 50px'}}>
-                    <div>
-                    Tijdslots
-                    </div>
+                <ListGroup style={{border:'1px solid', margin: '25px', width: '250px'}}>
+                    <ListGroupItem style={{background: '#a68376', color: 'white'}}>
+                        Selecteer een tijdslot
+                    </ListGroupItem>
                     {  
                     slots.map(item => 
                         (<ListGroupItem 
@@ -195,11 +209,12 @@ function ReservationForm(){
                             active={item.active} 
                             onClick={clickSlot}>{item.slot}</ListGroupItem>))
                     }
-                </ListGroup>
 
-                <Button type="submit" variant='primary' style={{display:'center'}} >Reserveer</Button>
+                <Button type="submit" variant='primary' style={{display:'center'}} disabled={buttonDisabled} >Verstuur</Button>
+                </ListGroup>
             </Col>
         </Row>
+        </FormGroup>
     </Form>
     
     </>

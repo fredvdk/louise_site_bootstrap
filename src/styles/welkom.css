@@ -1,0 +1,54 @@
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.toptext {
+    position: absolute;
+    color: black;
+    top: 5%;
+    margin-right: 10%;
+    margin-left: 50%
+}
+
+@media only screen and (max-width: 600px) {
+    .toptext {
+      font-size: x-small;
+    }
+    #welkombtn {display: none;}
+  }
+
+.bottomleft {
+    position: absolute;
+    left: 0%;
+    bottom: 25%;
+    margin-right: 50%;
+    height: 100%;
+    border-radius: 5px;
+    opacity: 0.5;
+}
+
+.bottomright {
+    position: absolute;
+    right: 15%;
+    bottom: 15%;
+    margin-left: 50%;
+    transform: translate(-50%, 0%);
+    
+}
+
+img.backgroundimage {
+    width: 100%;
+    opacity:0.2;
+
+}
+
+.googlemap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Container, Row, Image } from 'react-bootstrap';
-import './App.css';
+import './styles/App.css';
 
 
 function TextSegment(props: { text: string, image: string, imgleft: boolean }){

@@ -5,9 +5,8 @@
     height: 60px;
     width: 100%;
     padding: 0.5rem 0rem;
-    background-color: #f7f2ee;
-    color: black;
     box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
+    z-index: 100;
   }
 
   .sticky {
@@ -18,9 +17,12 @@
   
   .brand-name {
     text-decoration: none;
-    color: black;
     font-size: 1.3rem;
     margin-left: 1rem;
+    border: solid;
+    border-radius: 15px;
+    background-color: #f2edd8;
+    color: #a68376 !important;
   }
   
   .navigation-menu {
@@ -36,14 +38,17 @@
   .navigation-menu li {
     list-style-type: none;
     margin: 0 1rem;
-    
+  }
+
+  .navigation-menu li .active{
+    border-bottom: solid;
+    border-bottom-right-radius: 15px;
   }
   
   .navigation-menu li a {
     text-decoration: none;
     display: block;
     width: 100%;
-    color:black
   }
   a.menu {
     padding: 5px;
@@ -52,7 +57,9 @@
 }
 
     a.menu:hover {
-        text-decoration: underline;
+        color: black !important;
+        border-bottom: solid;
+        border-bottom-right-radius: 15px;
     }
 
   
@@ -105,7 +112,7 @@
     }
   
     .navigation-menu li:hover {
-      background-color: #eee;
+      background-color: #f2edd8;
     }
   
     .navigation-menu.expanded ul {
@@ -113,7 +120,5 @@
       height: auto;
 
     }
-
-    
   }
   
